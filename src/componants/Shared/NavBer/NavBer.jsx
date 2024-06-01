@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom"; import useAuth from "../../Hooks/useAuth";
+import { BiSolidDonateBlood } from "react-icons/bi";
+// import logo from '../../../../src/assets/blood-donated-icon.jpg'
 
 const NavBer = () => {
     const { user, signOutUser } = useAuth();
@@ -40,7 +42,7 @@ const NavBer = () => {
                         {navLink}
                     </ul>
                 </div>
-                <Link to="/" className="btn btn-ghost text-xl uppercase">Blood Buddies</Link>
+                <Link to="/" className="btn btn-ghost text-xl uppercase flex items-center"><span><BiSolidDonateBlood className="text-4xl text-[#EF3D32]"/></span>Blood Buddies</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
