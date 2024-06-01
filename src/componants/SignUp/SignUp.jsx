@@ -2,7 +2,29 @@
 // import { useState } from 'react';
 // import { toast } from 'react-toastify';
 
+import { useForm } from "react-hook-form";
+import useAuth from "../Hooks/useAuth";
+
 const SignUp = () => {
+
+    const {
+        register,
+        handleSubmit,
+    } = useForm();
+
+    const { createUser } = useAuth();
+
+    const onSubmit = (data) => {
+        console.log(data);
+        createUser(data.email, data.password)
+            .then(result => {
+                console.log(result)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
+
     //   const [formData, setFormData] = useState({
     //     email: '',
     //     name: '',
@@ -53,7 +75,7 @@ const SignUp = () => {
     return (
         <div className="bg-gray-300 md:w-2/3 mx-auto shadow-md">
             <h2 className="text-3xl text-center pt-4">Sign Up</h2>
-            <form className="p-10">
+            <form onSubmit={handleSubmit(onSubmit)} className="p-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="flex flex-col justify-center mb-4">
                         <div>
@@ -61,7 +83,7 @@ const SignUp = () => {
                                 <span>Email</span>
                             </label>
                         </div>
-                        <input type="email" name="email" placeholder="Email" required className="input input-bordered w-full mb-4" />
+                        <input {...register("email", { required: true })} type="email" name="email" placeholder="Email" required className="input input-bordered w-full mb-4" />
                     </div>
                     <div>
                         <div>
@@ -70,7 +92,7 @@ const SignUp = () => {
                             </label>
                         </div>
                         <div>
-                            <input type="text" name="name" placeholder="Name" required className="input input-bordered w-full mb-4" />
+                            <input {...register("name", { required: true })} type="text" name="name" placeholder="Name" required className="input input-bordered w-full mb-4" />
                         </div>
                     </div>
                 </div>
@@ -82,7 +104,7 @@ const SignUp = () => {
                                 <span>Blood Group</span>
                             </label>
                         </div>
-                        <select name="bloodGroup" required className="select select-bordered w-full ">
+                        <select {...register("bloodGroup", { required: true })} name="bloodGroup" required className="select select-bordered w-full ">
                             <option value="blood">Select Your Blood Group</option>
                             <option value="A+">A+</option>
                             <option value="A-">A-</option>
@@ -101,7 +123,7 @@ const SignUp = () => {
                             </label>
                         </div>
                         <div>
-                            <input type="text" name="district" placeholder="District" required className="input input-bordered w-full mb-4" />
+                            <input {...register("district", { required: true })} type="text" name="district" placeholder="District" required className="input input-bordered w-full mb-4" />
                         </div>
                     </div>
                 </div>
@@ -113,7 +135,7 @@ const SignUp = () => {
                             </label>
                         </div>
                         <div>
-                            <input type="text" name="upazila" placeholder="Upazila" required className="input input-bordered w-full mb-4" />
+                            <input {...register("upazila", { required: true })} type="text" name="upazila" placeholder="Upazila" required className="input input-bordered w-full mb-4" />
                         </div>
                     </div>
 
@@ -123,7 +145,7 @@ const SignUp = () => {
                                 <span>chose your image file</span>
                             </label>
                         </div>
-                        <input type="file" className="file-input file-input-bordered w-full" />
+                        <input {...register("imageFile", { required: true })} name="imageFile" type="file" className="file-input file-input-bordered w-full" />
                     </div>
 
                 </div>
@@ -135,7 +157,7 @@ const SignUp = () => {
                             </label>
                         </div>
                         <div>
-                            <input type="password" name="password" placeholder="Password" required className="input input-bordered w-full mb-4" />
+                            <input {...register("password", { required: true })} type="password" name="password" placeholder="Password" required className="input input-bordered w-full mb-4" />
                         </div>
                     </div>
                     <div>
@@ -145,12 +167,12 @@ const SignUp = () => {
                             </label>
                         </div>
                         <div>
-                            <input type="password" name="confirmPassword" placeholder="Confirm Password" required className="input input-bordered w-full" />
+                            <input {...register("confirmPassword", { required: true })} type="password" name="confirmPassword" placeholder="Confirm Password" required className="input input-bordered w-full" />
                         </div>
                     </div>
                 </div>
                 <div>
-                    <input type="submit" value="Sign Up" className="w-full bg-slate-600 p-2 rounded text-white mt-4"/>
+                    <input type="submit" value="Sign Up" className="w-full bg-slate-600 p-2 rounded text-white mt-4" />
                 </div>
             </form>
         </div>
