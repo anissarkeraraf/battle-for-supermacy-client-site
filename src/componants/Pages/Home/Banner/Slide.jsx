@@ -9,14 +9,16 @@ const Slide = ({ image }) => {
             }}
             >
                 <div className="flex justify-start w-full h-full bg-gray-900/40">
-                    <div className="md:pl-20 md:pt-36">
+                    <div className="pl-16 pt-16 md:pl-20 md:pt-36">
                         <h1 className="text-xl md:text-2xl font-semibold text-white lg:text-3xl">Donated blood, save life!</h1>
                         <p className="md:text-4xl lg:text-6xl font-bold text-white uppercase">Your blood <br /> can bring smile <br /> in other person face</p>
                         <div>
                             <Link to='/signup'>
                                 <button className=" px-5 py-4 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-[#4245BE] rounded lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500 mr-10">Join as a donor</button>
                             </Link>
-                            <button className=" px-5 py-4 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-[#4245BE] rounded lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">Search Donors</button>
+                            <Link to='/donerSearch'>
+                                <button className=" px-5 py-4 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-[#4245BE] rounded lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">Search Donors</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

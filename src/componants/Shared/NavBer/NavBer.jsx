@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom"; import useAuth from "../../Hooks/useAuth";
 import { BiSolidDonateBlood } from "react-icons/bi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import logo from '../../../../src/assets/blood-donated-icon.jpg'
 
 const NavBer = () => {
     const { user, signOutUser } = useAuth();
 
+
     const handleLogout = async () => {
         try {
             await signOutUser();
+            toast.success('Log Out Successfully')
         } catch (error) {
             console.error("Error logging out:", error);
         }
@@ -15,6 +19,7 @@ const NavBer = () => {
 
     const navLink = user ? (
         <>
+            <li><Link to="/">Home</Link></li>
             <li><Link to="/blog">Blog</Link></li>
             <li><Link to="/donation-requests">Donation Requests</Link></li>
             <li><Link to="/fundings">Fundings</Link></li>
@@ -30,7 +35,7 @@ const NavBer = () => {
     );
 
     return (
-        <div className="navbar bg-white text-black glass z-50 fixed">
+        <div className="navbar bg-white text-black glass z-50">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -38,13 +43,13 @@ const NavBer = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
                         </svg>
                     </div>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box dropdown-end">
                         {navLink}
                     </ul>
                 </div>
-                <Link to="/" className="btn btn-ghost text-xl uppercase flex items-center"><span><BiSolidDonateBlood className="text-4xl text-[#EF3D32]"/></span>Blood Buddies</Link>
+                <Link to="/" className="btn btn-ghost text-xl uppercase flex items-center"><span><BiSolidDonateBlood className="text-4xl text-[#EF3D32]" /></span>Blood Buddies</Link>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            <div className="navbar-end hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
                     {navLink}
                 </ul>
@@ -62,6 +67,7 @@ const NavBer = () => {
                     </ul>
                 </li>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

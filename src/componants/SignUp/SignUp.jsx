@@ -4,25 +4,71 @@
 
 import { useForm } from "react-hook-form";
 import useAuth from "../Hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const SignUp = () => {
+
+    const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
 
     const {
         register,
         handleSubmit,
+        reset
     } = useForm();
 
     const { createUser } = useAuth();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
-        createUser(data.email, data.password)
-            .then(result => {
-                console.log(result)
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
+        // image uploaded to imagebb
+        const imageFile = { image: data.imageFile[0] };
+        const res = await axiosPublic.post(image_hosting_api, imageFile, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+
+        })
+        if (res.data.success) {
+            const userInfo = {
+                name: data.name,
+                email: data.email,
+                bloodGroup: data.bloodGroup,
+                district: data.district,
+                upazila: data.upazila,
+                image: res.data.data.display_url
+            }
+
+            console.log(res.data)
+            createUser(data.email, data.password)
+                .then(result => {
+                    console.log(result)
+
+                    axiosPublic.post('/doners', userInfo)
+                        .then(res => {
+                            if (res.data.insertedId) {
+                                console.log('user added to the database')
+                                reset();
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "User created successfully",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                navigate('/');
+                            }
+                        })
+                    navigate();
+                })
+                .catch(error => {
+                    console.log(error.message)
+                })
+        }
     }
 
     //   const [formData, setFormData] = useState({
@@ -77,7 +123,7 @@ const SignUp = () => {
             <h2 className="text-3xl text-center pt-4">Sign Up</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="p-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div className="flex flex-col justify-center mb-4">
+                    <div className="flex flex-col justify-center md:mb-4">
                         <div>
                             <label className="lable-text">
                                 <span>Email</span>
@@ -175,6 +221,9 @@ const SignUp = () => {
                     <input type="submit" value="Sign Up" className="w-full bg-slate-600 p-2 rounded text-white mt-4" />
                 </div>
             </form>
+            <p className="pb-4 text-sm text-center">
+                Already have an account? <a href="/login" className="text-blue-500 hover:underline">Login here</a>
+            </p>
         </div>
     );
 };
