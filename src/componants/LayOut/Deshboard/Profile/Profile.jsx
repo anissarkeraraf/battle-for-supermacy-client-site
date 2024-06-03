@@ -1,131 +1,177 @@
-// import { useState } from 'react';
-// import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { FaEdit } from 'react-icons/fa';
 import useAuth from '../../../Hooks/useAuth';
-// import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import useDonors from '../../../Hooks/useDonors';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const Profile = () => {
     const { user } = useAuth();
-    // const axiosPublic = useAxiosPublic();
-    //   const [userData, setUserData] = useState({
-    //     name: '',
-    //     email: '',
-    //     avatar: '',
-    //     address: {
-    //       district: '',
-    //       upazila: ''
-    //     },
-    //     bloodGroup: ''
-    //   });
+    const [donor] = useDonors();
+    const [isEditable, setIsEditable] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        image: '',
+        district: '',
+        upazila: '',
+        bloodGroup: ''
+    });
+    const axiosSecure = useAxiosSecure();
 
-    //   const [isEditing, setIsEditing] = useState(false);
+    useEffect(() => {
+        if (donor && donor.length > 0) {
+            setFormData({
+                name: donor[0].name || '',
+                email: donor[0].email || '',
+                image: donor[0].image || '',
+                district: donor[0].district || '',
+                upazila: donor[0].upazila || '',
+                bloodGroup: donor[0].bloodGroup || ''
+            });
+        }
+    }, [donor]);
 
-    //   useEffect(() => {
-    //     // Fetch user data from the server
-    //     axiosPublic.get('/api/user/profile')
-    //       .then(response => {
-    //         setUserData(response.data);
-    //       })
-    //       .catch(error => {
-    //         console.error('There was an error fetching the user data!', error);
-    //       });
-    //   }, []);
+    const handleEditClick = () => {
+        setIsEditable(true);
+    };
 
-    //   const handleInputChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setUserData({
-    //       ...userData,
-    //       [name]: value
-    //     });
-    //   };
+    const handleSaveClick = async () => {
+        try {
+            const res = await axiosSecure.patch(`/doners/${user.email}`, formData);
+            // console.log(res.data);
+            if (res.data.modifiedCount){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `${donor.name} updated successfully`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+                setIsEditable(false);
+        } catch (error) {
+            console.error('Error updating donor:', error);
+        }
+    };
 
-    //   const handleAddressChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setUserData({
-    //       ...userData,
-    //       address: {
-    //         ...userData.address,
-    //         [name]: value
-    //       }
-    //     });
-    //   };
-
-    //   const handleEditClick = () => {
-    //     setIsEditing(true);
-    //   };
-
-    //   const handleSaveClick = () => {
-    //     // Save updated data to the server
-    //     axios.put('/api/user/profile', userData)
-    //       .then(response => {
-    //         setUserData(response.data);
-    //         setIsEditing(false);
-    //       })
-    //       .catch(error => {
-    //         console.error('There was an error updating the user data!', error);
-    //       });
-    //   };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
 
     return (
         <div>
-            <h1>Profile Page</h1>
-            <form>
-                <div>
-                    <label>Name:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        defaultValue={user?.displayName}
-                        readOnly
-                    />
-                </div>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        defaultValue={user?.email}
-                        readOnly
-                    />
-                </div>
-                <div>
-                    <label>Avatar:</label>
-                    <input
-                        type="text"
-                        name="avatar"
-                        defaultValue={user?.photoURL}
-                        readOnly
-                    />
-                </div>
-                <div>
-                    <label>District:</label>
-                    <input
-                        type="text"
-                        name="district"
-                        readOnly
-                    />
-                </div>
-                <div>
-                    <label>Upazila:</label>
-                    <input
-                        type="text"
-                        name="upazila"
-                        readOnly
-                    />
-                </div>
-                <div>
-                    <label>Blood Group:</label>
-                    <input
-                        type="text"
-                        name="bloodGroup"
-                        readOnly
-                    />
-                </div>
-
-                <button type="button">Save</button>
-
-                <button type="button">Edit</button>
-
-            </form>
+            <div className='bg-gray-100 mt-20'>
+                <form className='p-4 md:p-20'>
+                    <h2 className="text-2xl md:text-4xl uppercase text-center mb-10">Update Your Profile</h2>
+                    <div className='edit-btn flex justify-end'>
+                        {!isEditable ? (
+                            <button className='bg-yellow-600 px-3 py-1 rounded text-white' type="button" onClick={handleEditClick}>Edit</button>
+                        ) : (
+                            <button className='bg-yellow-600 px-3 py-1 rounded text-white' type="button" onClick={handleSaveClick}>Save</button>
+                        )}
+                    </div>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+                        <div>
+                            <div>
+                                <label htmlFor="name">
+                                    <span>Name:</span>
+                                </label>
+                            </div>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                className="input input-bordered w-full"
+                                readOnly={!isEditable}
+                            />
+                        </div>
+                        <div>
+                            <div>
+                                <label htmlFor="email">
+                                    <span>Email:</span>
+                                </label>
+                            </div>
+                            <input
+                                type="text"
+                                name="email"
+                                value={formData.email}
+                                className="input input-bordered w-full"
+                                readOnly
+                            />
+                        </div>
+                    </div>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 mt-4'>
+                        <div>
+                            <div>
+                                <label htmlFor="image">
+                                    <span>Avatar:</span>
+                                </label>
+                            </div>
+                            <input
+                                type="text"
+                                name="image"
+                                value={formData.image}
+                                onChange={handleChange}
+                                className="input input-bordered w-full"
+                                readOnly={!isEditable}
+                            />
+                        </div>
+                        <div>
+                            <div>
+                                <label htmlFor="district">
+                                    <span>District:</span>
+                                </label>
+                            </div>
+                            <input
+                                type="text"
+                                name="district"
+                                value={formData.district}
+                                onChange={handleChange}
+                                className="input input-bordered w-full"
+                                readOnly={!isEditable}
+                            />
+                        </div>
+                    </div>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 mt-4'>
+                        <div>
+                            <div>
+                                <label htmlFor="upazila">
+                                    <span>Upazila:</span>
+                                </label>
+                            </div>
+                            <input
+                                type="text"
+                                name="upazila"
+                                value={formData.upazila}
+                                onChange={handleChange}
+                                className="input input-bordered w-full"
+                                readOnly={!isEditable}
+                            />
+                        </div>
+                        <div>
+                            <div>
+                                <label htmlFor="bloodGroup">
+                                    <span>Blood Group:</span>
+                                </label>
+                            </div>
+                            <input
+                                type="text"
+                                name="bloodGroup"
+                                value={formData.bloodGroup}
+                                onChange={handleChange}
+                                className="input input-bordered w-full"
+                                readOnly={!isEditable}
+                            />
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

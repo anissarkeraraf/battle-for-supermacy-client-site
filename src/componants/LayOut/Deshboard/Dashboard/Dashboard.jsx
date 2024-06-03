@@ -48,7 +48,7 @@ const Dashboard = () => {
         id="open-sidebar"
         ref={openSidebarButtonRef}
         onClick={handleOpenSidebar}
-        className='menu p-10 lg:hidden'
+        className='menu p-4 md:p-10 lg:hidden'
       >
         <IoMenuOutline className='text-2xl' />
       </button>
