@@ -7,6 +7,9 @@ import useAuth from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { districts } from "../DistricsAndUpazila/DistricsAndUpazila";
+import { useEffect, useState } from "react";
+import useUpazila from "../Hooks/useUpazila";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -21,7 +24,7 @@ const SignUp = () => {
         reset
     } = useForm();
 
-    const { createUser } = useAuth();
+    const { createUser, updateUserProfile } = useAuth();
 
     const onSubmit = async (data) => {
         console.log(data);
@@ -34,7 +37,7 @@ const SignUp = () => {
 
         })
         if (res.data.success) {
-            const userInfo = {
+           const userInfo = {
                 name: data.name,
                 email: data.email,
                 bloodGroup: data.bloodGroup,
@@ -46,7 +49,14 @@ const SignUp = () => {
             console.log(res.data)
             createUser(data.email, data.password)
                 .then(result => {
-                    console.log(result)
+                    console.log(result);
+
+                    const imageUrl = res.data.data.display_url;
+
+                    updateUserProfile({
+                        displayName: data.name,
+                        photoURL: imageUrl
+                    });
 
                     axiosPublic.post('/doners', userInfo)
                         .then(res => {
@@ -118,6 +128,31 @@ const SignUp = () => {
     //     }
     //   };
 
+    // const [donors, setDonors] = useState([]);
+    const [searchParams, setSearchParams] = useState({
+        bloodGroup: 'A+',
+        district: '',
+        upazila: ''
+    });
+    const upazilas = useUpazila(searchParams.district);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setSearchParams((prevParams) => ({
+            ...prevParams,
+            [name]: value
+        }));
+    };
+
+    useEffect(() => {
+        if (searchParams.district) {
+            setSearchParams((prevParams) => ({
+                ...prevParams,
+                upazila: ''
+            }));
+        }
+    }, [searchParams.district]);
+
     return (
         <div className="bg-gray-300 md:w-2/3 mx-auto shadow-md">
             <h2 className="text-3xl text-center pt-4">Sign Up</h2>
@@ -126,28 +161,28 @@ const SignUp = () => {
                     <div className="flex flex-col justify-center md:mb-4">
                         <div>
                             <label className="lable-text">
-                                <span>Email</span>
+                                <span>Email:</span>
                             </label>
                         </div>
-                        <input {...register("email", { required: true })} type="email" name="email" placeholder="Email" required className="input input-bordered w-full mb-4" />
+                        <input {...register("email", { required: true })} type="email" name="email" placeholder="Email" required className="input input-bordered w-full" />
                     </div>
                     <div>
                         <div>
                             <label htmlFor="">
-                                <span>Name</span>
+                                <span>Name:</span>
                             </label>
                         </div>
                         <div>
-                            <input {...register("name", { required: true })} type="text" name="name" placeholder="Name" required className="input input-bordered w-full mb-4" />
+                            <input {...register("name", { required: true })} type="text" name="name" placeholder="Name" required className="input input-bordered w-full" />
                         </div>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-4">
                     <div>
                         <div>
                             <label htmlFor="">
-                                <span>Blood Group</span>
+                                <span>Blood Group:</span>
                             </label>
                         </div>
                         <select {...register("bloodGroup", { required: true })} name="bloodGroup" required className="select select-bordered w-full ">
@@ -164,31 +199,37 @@ const SignUp = () => {
                     </div>
                     <div>
                         <div>
-                            <label htmlFor="">
-                                <span>District</span>
+                            <label htmlFor="district">
+                                <span>District:</span>
                             </label>
                         </div>
-                        <div>
-                            <input {...register("district", { required: true })} type="text" name="district" placeholder="District" required className="input input-bordered w-full mb-4" />
-                        </div>
+                        <select  {...register("district", { required: true })} id="district" name="district" value={searchParams.district} onChange={handleChange} required className="select select-bordered w-full">
+                            <option value="">Select District</option>
+                            {districts.map((district, index) => (
+                                <option key={index} value={district}>{district}</option>
+                            ))}
+                        </select>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-4">
                     <div>
                         <div>
-                            <label htmlFor="">
-                                <span>Upazila</span>
+                            <label htmlFor="upazila">
+                                <span>Upazila:</span>
                             </label>
                         </div>
-                        <div>
-                            <input {...register("upazila", { required: true })} type="text" name="upazila" placeholder="Upazila" required className="input input-bordered w-full mb-4" />
-                        </div>
+                        <select  {...register("upazila", { required: true })} id="upazila" name="upazila" value={searchParams.upazila} onChange={handleChange} required className="select select-bordered w-full">
+                            <option value="">Select Upazila</option>
+                            {upazilas.map((upazila, index) => (
+                                <option key={index} value={upazila}>{upazila}</option>
+                            ))}
+                        </select>
                     </div>
 
                     <div>
                         <div>
                             <label htmlFor="">
-                                <span>chose your image file</span>
+                                <span>chose your image file:</span>
                             </label>
                         </div>
                         <input {...register("imageFile", { required: true })} name="imageFile" type="file" className="file-input file-input-bordered w-full" />
@@ -199,7 +240,7 @@ const SignUp = () => {
                     <div>
                         <div>
                             <label htmlFor="">
-                                <span>Password</span>
+                                <span>Password:</span>
                             </label>
                         </div>
                         <div>
@@ -209,7 +250,7 @@ const SignUp = () => {
                     <div>
                         <div>
                             <label htmlFor="">
-                                <span>Confirm Password</span>
+                                <span>Confirm Password:</span>
                             </label>
                         </div>
                         <div>

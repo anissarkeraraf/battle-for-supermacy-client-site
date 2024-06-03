@@ -21,7 +21,7 @@ const NavBer = () => {
         <>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/blog">Blog</Link></li>
-            <li><Link to="/donation-requests">Donation Requests</Link></li>
+            <li><Link to="/donationRequests">Donation Requests</Link></li>
             <li><Link to="/fundings">Fundings</Link></li>
         </>
     ) : (
@@ -35,7 +35,7 @@ const NavBer = () => {
     );
 
     return (
-        <div className="navbar bg-white text-black glass z-50">
+        <div className="navbar bg-white text-black glass z-50 fixed">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

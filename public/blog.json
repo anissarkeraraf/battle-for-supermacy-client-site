@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "ptProblem": "Kidney Failure",
+        "image": "https://templates.bwlthemes.com/blood_donation/v_2/images/blog_1.jpg",
+        "relation": "Brother",
+        "title": "Donating blood connects us all in a soul.",
+        "date": "2024-06-05",
+        "description": "We have adopted the slogan 'Share life, give blood', to draw attention to the roles that voluntary donation systems play in encouraging people to care for one another and promote community cohesion."
+    },
+    {
+        "id": 2,
+        "ptProblem": "Severe Accident",
+        "image": "https://templates.bwlthemes.com/blood_donation/v_2/images/blog_2.jpg",
+        "relation": "Friend",
+        "title": "Give Blood and save three lives or even more.",
+        "date": "2024-06-06",
+        "description": "The campaign aims to highlight stories of people whose lives have been saved through blood donation, to motivate regular blood donors to continue giving blood, and motivate people in good health who have never given blood to begin doing so, particularly young people."
+    },
+    {
+        "id": 3,
+        "ptProblem": "Chemotherapy",
+        "image": "https://templates.bwlthemes.com/blood_donation/v_2/images/blog_3.jpg",
+        "relation": "Mother",
+        "title": "Why should we donate blood and am I eligible?",
+        "date": "2024-06-07",
+        "description": "We have adopted the slogan 'Share life, give blood', to draw attention to the roles that voluntary donation systems play in encouraging people to care for one another and promote community cohesion."
+    }
+]
