@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaBook, FaCalendar, FaUser } from "react-icons/fa";
 import blogImg from '../../../assets/blog.jpg'
+import { Helmet } from "react-helmet";
 
 
 const Blog = () => {
@@ -17,6 +18,9 @@ const Blog = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Blog | Blood Buddies</title>
+            </Helmet>
             <div className="relative mb-10">
                 <img src={blogImg} alt="" className="w-full h-[250px]" />
                 <p className="absolute text-4xl md:text-5xl uppercase font-bold  top-24 left-[120px] md:left-[250px] lg:left-[520px]">Blog Posts</p>

@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import useAuth from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 
 const Login = () => {
@@ -32,6 +33,9 @@ const Login = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Login | Blood Buddies</title>
+            </Helmet>
             <div className="min-h-screen flex items-center justify-center bg-gray-100">
                 <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
                     <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>

@@ -4,6 +4,7 @@ import useAuth from '../../../Hooks/useAuth';
 import useDonors from '../../../Hooks/useDonors';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
     const { user } = useAuth();
@@ -65,6 +66,9 @@ const Profile = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Profile | Blood Buddies</title>
+            </Helmet>
             <div className='bg-gray-100 mt-20'>
                 <form className='p-4 md:p-20'>
                     <h2 className="text-2xl md:text-4xl uppercase text-center mb-10">Update Your Profile</h2>

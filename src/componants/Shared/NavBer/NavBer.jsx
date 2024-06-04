@@ -62,7 +62,7 @@ const NavBer = () => {
                         </div>
                     </a>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white text-black rounded-box w-52">
-                        <li><Link to="/dashboard">Dashboard</Link></li>
+                        <li><Link to="/dashboard/donorHome">Dashboard</Link></li>
                         <li><button onClick={handleLogout}>Logout</button></li>
                     </ul>
                 </li>
