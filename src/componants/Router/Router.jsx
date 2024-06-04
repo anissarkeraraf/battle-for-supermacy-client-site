@@ -13,6 +13,8 @@ import Profile from "../LayOut/Deshboard/Profile/Profile";
 import MyDonorRequests from "../LayOut/Deshboard/MyDonorRequests/MyDonorRequests";
 import DonorHome from "../LayOut/Deshboard/DonorHome/DonorHome";
 import CreateDonorRequest from "../LayOut/Deshboard/CreateDonorRequest/CreateDonorRequest";
+import DonorRequestUpdate from "../LayOut/Deshboard/DonorHome/DonorRequestUpdate";
+import DonationRequestDetails from "../LayOut/Deshboard/DonorHome/DonationRequestDetails";
 
 export const router = createBrowserRouter([
   {
@@ -47,7 +49,7 @@ export const router = createBrowserRouter([
     element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     children: [
       {
-        path:'donorHome',
+        path: 'donorHome',
         element: <DonorHome></DonorHome>
       },
       {
@@ -55,8 +57,16 @@ export const router = createBrowserRouter([
         element: <Profile></Profile>
       },
       {
+        path: 'updatedRequest/:id',
+        element: <DonorRequestUpdate></DonorRequestUpdate>
+      },
+      {
+        path: 'details/:id',
+        element: <DonationRequestDetails></DonationRequestDetails>
+      },
+      {
         path: 'my-donation-requests',
-        element:<MyDonorRequests></MyDonorRequests>
+        element: <MyDonorRequests></MyDonorRequests>
       },
       {
         path: 'create-donation-request',

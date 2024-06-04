@@ -105,13 +105,17 @@ const DonorHome = () => {
                                                 <>
                                                     <div className='grid grid-cols-1 lg:grid-cols-3  md:my-4'>
                                                         <div>
-                                                            <button className='bg-yellow-500 px-3 py-1 rounded mb-2 lg:mb-0'><FaEdit className='text-xl '></FaEdit></button>
+                                                            <Link to={`/dashboard/updatedRequest/${request._id}`}>
+                                                                <button className='bg-yellow-500 px-3 py-1 rounded mb-2 lg:mb-0'><FaEdit className='text-xl '></FaEdit></button>
+                                                            </Link>
                                                         </div>
                                                         <div>
-                                                            <button className='bg-gray-300 px-3 py-1 rounded  mb-2 lg:mb-0'> <GrView className='text-xl' /></button>
+                                                            <Link to={`/dashboard/details/${request._id}`}>
+                                                                <button className='bg-gray-300 px-3 py-1 rounded  mb-2 lg:mb-0'> <GrView className='text-xl' /></button>
+                                                            </Link>
                                                         </div>
                                                         <div>
-                                                            <button onClick={() => handleDelete(request._id)}className='bg-orange-400 px-3 py-1 rounded'><MdDelete className='text-xl'></MdDelete></button>
+                                                            <button onClick={() => handleDelete(request._id)} className='bg-orange-400 px-3 py-1 rounded'><MdDelete className='text-xl'></MdDelete></button>
                                                         </div>
                                                     </div>
                                                 </>
