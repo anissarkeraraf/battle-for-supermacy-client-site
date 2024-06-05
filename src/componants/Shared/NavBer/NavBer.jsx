@@ -2,10 +2,13 @@ import { Link } from "react-router-dom"; import useAuth from "../../Hooks/useAut
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useDonors from "../../Hooks/useDonors";
 // import logo from '../../../../src/assets/blood-donated-icon.jpg'
 
 const NavBer = () => {
     const { user, signOutUser } = useAuth();
+    const [donor] = useDonors();
+    // console.log(donor)
 
 
     const handleLogout = async () => {
@@ -56,9 +59,9 @@ const NavBer = () => {
             </div>
             <div className="navbar-end">
                 <li tabIndex={0} className="dropdown dropdown-end">
-                    <a className="btn btn-ghost rounded-btn avatar" role="button">
+                    <a className="btn-ghost mr-5 rounded-btn avatar" role="button">
                         <div className="w-10 rounded-full">
-                            <img src={user?.photoURL || 'default-avatar.png'} alt="User Avatar" />
+                            <img src={donor[0]?.image || 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'} alt="User Avatar" />
                         </div>
                     </a>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white text-black rounded-box w-52">

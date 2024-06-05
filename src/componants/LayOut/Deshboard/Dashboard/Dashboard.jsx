@@ -7,7 +7,7 @@ import { BiSolidDonateBlood } from 'react-icons/bi';
 import { LuMenuSquare } from 'react-icons/lu';
 import { RiExchangeFundsFill } from 'react-icons/ri';
 import { Helmet } from 'react-helmet';
-// import useAdmin from '../../../Hooks/useAdmin';
+import useAdmin from '../../../Hooks/useAdmin';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -45,8 +45,8 @@ const Dashboard = () => {
   // }, [location]);
 
   // TODO
-  // const [isAdmin] = useAdmin();
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
+  // const isAdmin = true;
 
   return (
     <div>
