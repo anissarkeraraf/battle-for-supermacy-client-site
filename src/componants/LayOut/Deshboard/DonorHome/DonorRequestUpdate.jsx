@@ -30,11 +30,11 @@ const DonorRequestUpdate = () => {
 
         };
 
-        console.log("Data to be sent:", userInfo); // Log the data to be sent
+        console.log("Data to be sent:", userInfo); 
 
         try {
             const res = await axiosSecure.put(`/donorRequests/${donorRequest[0]?._id}`, userInfo);
-            console.log("Server response:", res.data); // Log the server response
+            console.log("Server response:", res.data);
 
             if (res.data) {
                 reset();

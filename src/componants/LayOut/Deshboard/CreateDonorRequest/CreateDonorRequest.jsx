@@ -12,7 +12,7 @@ const CreateDonationRequest = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [donor] = useDonors();
-    // console.log(donor[0])
+    console.log(donor)
 
     const {
         register,

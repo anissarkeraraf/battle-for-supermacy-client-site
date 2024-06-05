@@ -7,6 +7,7 @@ import { BiSolidDonateBlood } from 'react-icons/bi';
 import { LuMenuSquare } from 'react-icons/lu';
 import { RiExchangeFundsFill } from 'react-icons/ri';
 import { Helmet } from 'react-helmet';
+// import useAdmin from '../../../Hooks/useAdmin';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -43,6 +44,10 @@ const Dashboard = () => {
   //   }
   // }, [location]);
 
+  // TODO
+  // const [isAdmin] = useAdmin();
+  const isAdmin = true;
+
   return (
     <div>
       <Helmet>
@@ -68,18 +73,40 @@ const Dashboard = () => {
           <div className='p-2'>
             <h2 className="text-3xl text-white">Dashboard</h2>
             <ul className='menu'>
-              <li>
-                <NavLink to='/dashboard/donorHome' className='text-white flex items-center'><FaHome className='mr-2'></FaHome>Donor Home</NavLink>
-              </li>
-              <li>
-                <NavLink to='/dashboard/profile' className='text-white flex items-center'><FaUser className='mr-2'></FaUser> Profile</NavLink>
-              </li>
-              <li>
-                <NavLink to='/dashboard/my-donation-requests' className='text-white flex items-center'><BiSolidDonateBlood className='mr-2'></BiSolidDonateBlood>My Donation Requests</NavLink>
-              </li>
-              <li>
-                <NavLink to='/dashboard/create-donation-request' className='text-white flex items-center'><LuMenuSquare className='mr-2'></LuMenuSquare>Create Donation Request</NavLink>
-              </li>
+              {
+                isAdmin ? <>
+                  <li>
+                    <NavLink to='/dashboard/adminHome' className='text-white flex items-center'><FaHome className='mr-2'></FaHome>Admin Home</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to='/dashboard/profile' className='text-white flex items-center'><FaUser className='mr-2'></FaUser> Profile</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to='/dashboard/all-users' className='text-white flex items-center'><BiSolidDonateBlood className='mr-2'></BiSolidDonateBlood> All Users Page</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to='/dashboard/all-blood-donation-request' className='text-white flex items-center'><LuMenuSquare className='mr-2'></LuMenuSquare>All Donation Request</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to='/dashboard/content-management' className='text-white flex items-center'><LuMenuSquare className='mr-2'></LuMenuSquare>Content Management</NavLink>
+                  </li>
+                </>
+                  :
+                  <>
+                    <li>
+                      <NavLink to='/dashboard/donorHome' className='text-white flex items-center'><FaHome className='mr-2'></FaHome>Donor Home</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to='/dashboard/profile' className='text-white flex items-center'><FaUser className='mr-2'></FaUser> Profile</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to='/dashboard/my-donation-requests' className='text-white flex items-center'><BiSolidDonateBlood className='mr-2'></BiSolidDonateBlood>My Donation Requests</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to='/dashboard/create-donation-request' className='text-white flex items-center'><LuMenuSquare className='mr-2'></LuMenuSquare>Create Donation Request</NavLink>
+                    </li>
+                  </>
+              }
 
               {/* Shared Navbar */}
               <div className="divider divider-neutral"></div>

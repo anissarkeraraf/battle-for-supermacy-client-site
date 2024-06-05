@@ -15,6 +15,10 @@ import DonorHome from "../LayOut/Deshboard/DonorHome/DonorHome";
 import CreateDonorRequest from "../LayOut/Deshboard/CreateDonorRequest/CreateDonorRequest";
 import DonorRequestUpdate from "../LayOut/Deshboard/DonorHome/DonorRequestUpdate";
 import DonationRequestDetails from "../LayOut/Deshboard/DonorHome/DonationRequestDetails";
+import AdminHome from "../LayOut/Deshboard/AdminHome/AdminHome";
+import AllUsers from "../LayOut/Deshboard/AllUsers/AllUsers";
+import AllDonationRequest from "../LayOut/Deshboard/AllDonationRequest/AllDonationRequest";
+import ContentManagment from "../LayOut/Deshboard/ContentManagement/ContentManagment";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +52,7 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     children: [
+      // Donor Route
       {
         path: 'donorHome',
         element: <DonorHome></DonorHome>
@@ -71,6 +76,23 @@ export const router = createBrowserRouter([
       {
         path: 'create-donation-request',
         element: <CreateDonorRequest></CreateDonorRequest>
+      },
+      // Admin Route
+      {
+        path: 'adminHome',
+        element:<AdminHome></AdminHome>
+      },
+      {
+        path: 'all-users',
+        element:<AllUsers></AllUsers>
+      },
+      {
+        path: 'all-blood-donation-request',
+        element:<AllDonationRequest></AllDonationRequest>
+      },
+      {
+        path:'content-management',
+        element:<ContentManagment></ContentManagment>
       }
     ]
   }
