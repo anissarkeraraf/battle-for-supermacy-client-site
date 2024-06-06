@@ -1,11 +1,21 @@
+import { Helmet } from "react-helmet";
+import { Link, Outlet } from "react-router-dom";
 
-
-const ContentManagment = () => {
+const ContentManagement = () => {
     return (
         <div>
-            <h2 className="text-4xl">Content Managment</h2>
+            <Helmet>
+                <title>Content Management || Blood Buddies</title>
+            </Helmet>
+            <h1 className="text-4xl text-center">Content Management</h1>
+            <Link to="add-blog" className="btn btn-primary">
+                Add Blog
+            </Link>
+            <div className="flex-1">
+                <Outlet />
+            </div>
         </div>
     );
 };
 
-export default ContentManagment;
+export default ContentManagement;

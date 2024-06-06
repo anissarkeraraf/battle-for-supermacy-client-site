@@ -18,7 +18,9 @@ import DonationRequestDetails from "../LayOut/Deshboard/DonorHome/DonationReques
 import AdminHome from "../LayOut/Deshboard/AdminHome/AdminHome";
 import AllUsers from "../LayOut/Deshboard/AllUsers/AllUsers";
 import AllDonationRequest from "../LayOut/Deshboard/AllDonationRequest/AllDonationRequest";
-import ContentManagment from "../LayOut/Deshboard/ContentManagement/ContentManagment";
+import ContentManagement from "../../componants/LayOut/Deshboard/ContentManagement/ContentManagment";
+import AddBlog from "../LayOut/Deshboard/ContentManagement/AddBlog";
+import AllBlogs from "../LayOut/Deshboard/ContentManagement/AllBlogs";
 
 export const router = createBrowserRouter([
   {
@@ -92,7 +94,17 @@ export const router = createBrowserRouter([
       },
       {
         path:'content-management',
-        element:<ContentManagment></ContentManagment>
+        element:<ContentManagement></ContentManagement>,
+        children: [
+          {
+            path: 'add-blog',
+            element: <AddBlog></AddBlog>
+          },
+          {
+            path: 'all-blogs',
+            element: <AllBlogs></AllBlogs>
+          }
+        ]
       }
     ]
   }
