@@ -11,6 +11,7 @@ const DonorRequestUpdate = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [donorRequest] = useDonorRequest();
+    console.log(donorRequest)
 
     const { register, handleSubmit, reset } = useForm();
 
@@ -36,7 +37,7 @@ const DonorRequestUpdate = () => {
             const res = await axiosSecure.put(`/donorRequests/${donorRequest[0]?._id}`, userInfo);
             console.log("Server response:", res.data);
 
-            if (res.data) {
+            if (res.data.modifiedCount > 0) {
                 reset();
                 Swal.fire({
                     position: "center",

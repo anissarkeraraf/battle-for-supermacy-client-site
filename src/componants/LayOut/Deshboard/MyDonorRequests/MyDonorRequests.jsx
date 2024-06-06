@@ -81,7 +81,7 @@ const MyDonorRequests = () => {
                             </thead>
                             <tbody>
                                 {
-                                    donorRequest.slice(0, 3).map((request, index) => <tr key={request._id}>
+                                    donorRequest.map((request, index) => <tr key={request._id}>
                                         <th>{index + 1}</th>
                                         <td>{request.recipientName}</td>
                                         <td>{request.upazila}, {request.district}</td>
@@ -126,11 +126,6 @@ const MyDonorRequests = () => {
 
                             </tbody>
                         </table>
-                    </div>
-                    <div className='ml-40 md:ml-56 lg:ml-[460px] mt-10'>
-                        <Link to='/dashboard/my-donation-requests'>
-                            <button className="bg-teal-600 px-4 py-2 text-white rounded">View All Requests</button>
-                        </Link>
                     </div>
                 </>
             ) : (
