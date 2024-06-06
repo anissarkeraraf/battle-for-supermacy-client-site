@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import useUpazila from "../../../Hooks/useUpazila";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";

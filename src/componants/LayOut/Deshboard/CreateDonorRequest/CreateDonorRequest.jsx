@@ -7,12 +7,13 @@ import { districts } from '../../../DistricsAndUpazila/DistricsAndUpazila';
 import useDonors from '../../../Hooks/useDonors';
 import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet';
+import { BsEmojiFrown, BsEmojiFrownFill } from 'react-icons/bs';
 
 const CreateDonationRequest = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [donor] = useDonors();
-    console.log(donor)
+    // console.log(donor[0].role)
 
     const {
         register,
@@ -38,8 +39,6 @@ const CreateDonationRequest = () => {
             hospitalName: data.hospitalName,
             requestMessage: data.requestMessage,
             bloodGroup: data.bloodGroup,
-            status: ["pending", "inprogress", "done", "canceled"]
-
         }
 
         axiosSecure.post('/donorRequest', userInfo)
@@ -62,8 +61,13 @@ const CreateDonationRequest = () => {
     };
 
     // Blocked user check
-    if (user.status === 'blocked') {
-        return <p>You are blocked and cannot create a donation request.</p>;
+    if (donor[0].role === 'block') {
+        return (
+            <div className=' flex items-center  text-center mt-72 md:text-xl lg:text-2xl lg:ml-60'>
+                <p className=' text-red-500 mr-3'>You are blocked and cannot create a donation request</p>
+                <BsEmojiFrownFill className='text-yellow-400 border-none bg-black rounded-full'/>
+            </div>
+        );
     }
 
     // Distric and upazila
