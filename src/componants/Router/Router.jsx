@@ -21,6 +21,7 @@ import AllDonationRequest from "../LayOut/Deshboard/AllDonationRequest/AllDonati
 import ContentManagement from "../../componants/LayOut/Deshboard/ContentManagement/ContentManagment";
 import AddBlog from "../LayOut/Deshboard/ContentManagement/AddBlog";
 import AllBlogs from "../LayOut/Deshboard/ContentManagement/AllBlogs";
+import Funding from "../Pages/Funding/Funding";
 
 export const router = createBrowserRouter([
   {
@@ -46,7 +47,12 @@ export const router = createBrowserRouter([
       {
         path: '/blog',
         element: <Blog></Blog>
+      },
+      {
+        path: '/fundings',
+        element: <Funding></Funding>
       }
+
     ]
   },
   // Dashboard

@@ -4,15 +4,15 @@ import useAuth from "./useAuth";
 
 const useDonorRequest = () => {
     const axiosSecure = useAxiosSecure();
-    const { user } = useAuth();  // Ensure useAuth() is called correctly
+    const { user } = useAuth();
     const { refetch, data: donorRequest = [] } = useQuery({
         queryKey: ['donorRequest', user?.email],
         queryFn: async () => {
-            if (!user?.email) return [];  // Guard clause if email is not present
+            if (!user?.email) return []; 
             const res = await axiosSecure.get(`/donorRequest/${user.email}`);
             return res.data;
         },
-        enabled: !!user?.email,  // Ensure query runs only if email is available
+        enabled: !!user?.email,  
     });
 
     return [donorRequest, refetch];

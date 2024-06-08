@@ -1,7 +1,7 @@
 import { MdBloodtype } from "react-icons/md";
 import useDonorRequest from "../../../Hooks/useDonorRequest";
 import { FaAddressBook, FaHospitalAlt } from "react-icons/fa";
-import { IoIosTime } from "react-icons/io";
+// import { IoIosTime } from "react-icons/io";
 import { CgCalendarDates } from "react-icons/cg";
 import useDonors from "../../../Hooks/useDonors";
 
@@ -10,6 +10,7 @@ import useDonors from "../../../Hooks/useDonors";
 const DonationRequestDetails = () => {
     const [donorRequest] = useDonorRequest();
     const [donors] = useDonors();
+
 
 
     const name = (donorRequest[0]?.name);
@@ -23,7 +24,7 @@ const DonationRequestDetails = () => {
     const hospitalName = (donorRequest[0]?.hospitalName);
     const requestMessage = (donorRequest[0]?.requestMessage);
     const image = (donors[0]?.image);
-    console.log(image)
+    console.log(donorRequest)
 
 
 

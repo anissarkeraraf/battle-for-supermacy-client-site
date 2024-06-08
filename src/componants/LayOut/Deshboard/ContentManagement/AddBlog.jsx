@@ -6,6 +6,7 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import DOMPurify from 'dompurify';
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -37,10 +38,16 @@ const AddBlog = () => {
             });
 
             if (res.data.success) {
+                // Sanitize HTML content
+                const sanitizedHtml = DOMPurify.sanitize(content);
+
+                // Extract plain text
+                const plainText = sanitizedHtml.replace(/<[^>]*>/g, '');
+
                 const blogData = {
                     title: data.title,
                     thumbnail: res.data.data.display_url,
-                    content,
+                    content: plainText, // Save the plain text content
                     status: 'draft'
                 };
 
@@ -77,8 +84,8 @@ const AddBlog = () => {
             <Helmet>
                 <title>Add Blog || Blood Buddies</title>
             </Helmet>
-            <h2>Add Blog</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <h2 className='text-3xl text-center'>Add Blog</h2>
+            <form className='p-10' onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <div>
                         <div>
@@ -87,7 +94,7 @@ const AddBlog = () => {
                             </label>
                         </div>
                         <div>
-                            <input {...register('title', { required: true })} type="text" name="title" placeholder="Title" className="input input-bordered w-full mb-4" />
+                            <input {...register('title', { required: true })} type="text" name="title" placeholder="Title" className="input input-bordered w-full mb-8" />
                         </div>
                     </div>
                 </div>
@@ -97,7 +104,7 @@ const AddBlog = () => {
                             <span>Choose your image file:</span>
                         </label>
                     </div>
-                    <input {...register('imageFile', { required: true })} name="imageFile" type="file" className="file-input file-input-bordered w-full" />
+                    <input {...register('imageFile', { required: true })} name="imageFile" type="file" className="file-input file-input-bordered w-full mb-8" />
                 </div>
                 <div>
                     <label htmlFor="content">Content:</label>
@@ -108,7 +115,9 @@ const AddBlog = () => {
                         tabIndex={1}
                     />
                 </div>
-                <button className="btn" type="submit">Create</button>
+                <div className='mt-10'>
+                    <button className="bg-yellow-700 text-white px-3 py-2 rounded" type="submit">Create Blogs</button>
+                </div>
             </form>
         </div>
     );

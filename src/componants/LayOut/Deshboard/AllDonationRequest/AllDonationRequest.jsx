@@ -6,17 +6,19 @@ import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
+import useVolunteer from "../../../Hooks/useVolunteer ";
 
 const AllDonationRequest = () => {
     const axiosSecure = useAxiosSecure();
+    const [isVolunteer] = useVolunteer();
 
     const { data: donorRequest = [], refetch } = useQuery({
         queryKey: ['donorRequest'],
         queryFn: async () => {
             const res = await axiosSecure.get('/donorRequest');
-            return res.data
+            return res.data;
         }
-    })
+    });
 
     const handleDelete = id => {
         Swal.fire({
@@ -42,10 +44,21 @@ const AllDonationRequest = () => {
                     });
             }
         });
-    }
+    };
 
-
-
+    const handleUpdateStatus = (id, status) => {
+        axiosSecure.patch(`/donorRequests/${id}`, { status })
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        title: "Updated!",
+                        text: "The donation status has been updated.",
+                        icon: "success"
+                    });
+                }
+            });
+    };
 
     return (
         <div>
@@ -83,19 +96,26 @@ const AllDonationRequest = () => {
                                             <>
                                                 <button 
                                                     className="btn btn-success btn-sm ml-2"
+                                                    onClick={() => handleUpdateStatus(request._id, 'done')}
                                                 >Done</button>
                                                 <button
                                                     className="btn btn-danger btn-sm ml-2"
+                                                    onClick={() => handleUpdateStatus(request._id, 'cancelled')}
                                                 >Cancel</button>
                                             </>
                                         )}
-                                        {request.status !== 'inprogress' && (
+                                        {request.status !== 'inprogress' && !isVolunteer && (
                                             <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
                                                 <Link to={`/dashboard/details/${request._id}`}>
                                                     <button className='bg-gray-300 px-3 py-1 rounded mb-2 lg:mb-0'> <GrView className='text-xl' /></button>
                                                 </Link>
                                                 <button onClick={() => handleDelete(request._id)} className='bg-orange-400 px-2 py-1 rounded'><MdDelete className='text-xl mx-auto'></MdDelete></button>
                                             </div>
+                                        )}
+                                        {isVolunteer && request.status !== 'inprogress' && (
+                                            <Link to={`/dashboard/details/${request._id}`}>
+                                                <button className='bg-gray-300 px-3 py-1 rounded'> <GrView className='text-xl' /></button>
+                                            </Link>
                                         )}
                                     </td>
                                 </tr>
