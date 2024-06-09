@@ -23,18 +23,6 @@ const AllUsers = () => {
       console.log(donor[0])
 
 
-    // useEffect(() => {
-    //     fetchUsers();
-    // }, [filter, page]);
-
-    // const fetchUsers = async () => {
-    //     try {
-    //         const response = await axiosSecure.get(`/donors?status=${filter}&page=${page}&perPage=${perPage}`);
-    //         setUsers(response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching users:', error);
-    //     }
-    // };
 
     const handleBlock = async (_id) => {
         axiosSecure.patch(`/doner/block/${_id}`)

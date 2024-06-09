@@ -155,7 +155,7 @@ const SignUp = () => {
     }, [searchParams.district]);
 
     return (
-        <div>
+        <div className="pt-20">
             <Helmet>
                 <title>Sign Up | Blood Buddies</title>
             </Helmet>

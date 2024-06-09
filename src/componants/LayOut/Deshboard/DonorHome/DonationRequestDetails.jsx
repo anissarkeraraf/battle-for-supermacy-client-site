@@ -1,32 +1,21 @@
 import { MdBloodtype } from "react-icons/md";
-import useDonorRequest from "../../../Hooks/useDonorRequest";
 import { FaAddressBook, FaHospitalAlt } from "react-icons/fa";
-// import { IoIosTime } from "react-icons/io";
 import { CgCalendarDates } from "react-icons/cg";
 import useDonors from "../../../Hooks/useDonors";
+import { useLoaderData } from "react-router-dom";
 
 
 
 const DonationRequestDetails = () => {
-    const [donorRequest] = useDonorRequest();
     const [donors] = useDonors();
+    const details = useLoaderData();
+    console.log(details)
 
 
-
-    const name = (donorRequest[0]?.name);
-    const bloodGroup = (donorRequest[0]?.bloodGroup);
-    const address = (donorRequest[0]?.address);
-    const recipientName = (donorRequest[0]?.recipientName);
-    const district = (donorRequest[0]?.district);
-    const upazila = (donorRequest[0]?.upazila);
-    const donationDate = (donorRequest[0]?.donationDate);
-    const donationTime = (donorRequest[0]?.donationTime);
-    const hospitalName = (donorRequest[0]?.hospitalName);
-    const requestMessage = (donorRequest[0]?.requestMessage);
     const image = (donors[0]?.image);
-    console.log(donorRequest)
 
-
+ 
+const {name, bloodGroup, address, recipientName, district, upazila, donationDate, donationTime, hospitalName, requestMessage} = details;
 
     return (
         <div>
