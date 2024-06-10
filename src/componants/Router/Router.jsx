@@ -81,7 +81,7 @@ export const router = createBrowserRouter([
       {
         path: 'details/:id',
         element: <DonationRequestDetails></DonationRequestDetails>,
-        loader: ({ params }) => fetch(`http://localhost:5000/donorRequests/${params.id}`)
+        loader: ({ params }) => fetch(`https://assignment-battle-for-supremacy-server.vercel.app/donorRequests/${params.id}`)
       },
       {
         path: 'my-donation-requests',
