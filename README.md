@@ -3,7 +3,7 @@
 Welcome to Blood Buddies, Do you need blood of any group ? please contact Blood Buddies team;
 
 ## Live Site URL
-[GoromerAdventure](https://gorom-gorom-adventure.web.app/)
+[BloodBuddies](https://blood-buddies-d80de.web.app/)
 
 ## Features
 - **Blood Buddies Manamement**:
@@ -26,7 +26,11 @@ Welcome to Blood Buddies, Do you need blood of any group ? please contact Blood 
 
 
 
-****
+**Donation**
+- You can create blood request yourself , and you can donate blood if you want.
+
+
+
 
 
 
