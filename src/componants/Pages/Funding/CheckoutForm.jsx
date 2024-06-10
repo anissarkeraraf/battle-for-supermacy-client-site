@@ -2,6 +2,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useDonors from "../../Hooks/useDonors";
+import Swal from "sweetalert2";
 
 const CheckoutForm = () => {
     const [error, setError] = useState('');
@@ -73,10 +74,30 @@ const CheckoutForm = () => {
                 setTransactionId(paymentIntent.id)
             }
         }
+
+        // Now payment save the database
+        const payment = {
+            email: donor[0]?.email,
+            price: amount,
+            name: donor[0]?.name,
+            date: new Date()
+        }
+
+        const res = await axiosSecure.post('/payments', payment);
+        console.log('payment save',res);
+        if(res.data?.insertedId){
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Thanks for fund",
+                showConfirmButton: false,
+                timer: 1500
+              });
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className=" p-10 lg:px-36">
             <div className="mb-12">
                 <div className="mb-2">
                     <label>

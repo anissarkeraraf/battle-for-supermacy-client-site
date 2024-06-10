@@ -22,6 +22,7 @@ import ContentManagement from "../../componants/LayOut/Deshboard/ContentManageme
 import AddBlog from "../LayOut/Deshboard/ContentManagement/AddBlog";
 import AllBlogs from "../LayOut/Deshboard/ContentManagement/AllBlogs";
 import Funding from "../Pages/Funding/Funding";
+import BloodDonationRequest from "../Pages/BloodDonationRequest/BloodDonationRequest";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: '/fundings',
         element: <Funding></Funding>
+      },
+      {
+        path: '/donationRequests',
+        element: <BloodDonationRequest></BloodDonationRequest>
       }
 
     ]

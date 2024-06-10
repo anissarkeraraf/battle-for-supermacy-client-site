@@ -17,7 +17,7 @@ const Blog = () => {
     }, [blogs])
 
     return (
-        <div>
+        <div className="pt-20">
             <Helmet>
                 <title>Blog | Blood Buddies</title>
             </Helmet>
