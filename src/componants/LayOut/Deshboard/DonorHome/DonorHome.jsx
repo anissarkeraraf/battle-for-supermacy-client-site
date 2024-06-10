@@ -2,21 +2,26 @@ import { useEffect, useState } from 'react';
 import useAuth from '../../../Hooks/useAuth';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import useDonors from '../../../Hooks/useDonors';
-import useDonorRequest from '../../../Hooks/useDonorRequest';
 import { GrView } from 'react-icons/gr';
 import { FaEdit } from 'react-icons/fa';
-// import { FaDeleteLeft } from 'react-icons/fa6';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
 
 const DonorHome = () => {
     const { user } = useAuth();
     const [donor] = useDonors();
     const axiosSecure = useAxiosSecure();
     const [requests, setRequests] = useState([]);
-    // const history = (); // Make sure to import and initialize useHistory
-    const [donorRequest, refetch] = useDonorRequest();
+
+    const { data: donorRequest = [], refetch } = useQuery({
+        queryKey: ['donorRequest', user.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/donorRequest/${user.email}`);
+            return res.data;
+        }
+    });
 
     useEffect(() => {
         if (user?.email) {
@@ -37,7 +42,6 @@ const DonorHome = () => {
             if (result.isConfirmed) {
                 axiosSecure.delete(`/donorRequests/${id}`)
                     .then(res => {
-                        console.log(res)
                         if (res.data.deletedCount > 0) {
                             refetch();
                             Swal.fire({
@@ -45,12 +49,11 @@ const DonorHome = () => {
                                 text: "Your file has been deleted.",
                                 icon: "success"
                             });
-
                         }
-                    })
+                    });
             }
         });
-    }
+    };
 
     const handleStatusChange = async (id, status) => {
         await axiosSecure.patch(`/donorRequests/${id}`, { status });
@@ -60,8 +63,7 @@ const DonorHome = () => {
         refetch();
     };
 
-       // Function to dynamically determine the status based on certain criteria
-       const getStatus = (request) => {
+    const getStatus = (request) => {
         if (request?.confirmed && request?.inProgress) {
             return 'inprogress';
         } else if (request?.completed) {
@@ -80,7 +82,6 @@ const DonorHome = () => {
                 <>
                     <div className="overflow-x-auto">
                         <table className="table lg:w-10/12 mx-auto">
-                            {/* head */}
                             <thead className='bg-teal-500 bg-opacity-55 text-black'>
                                 <tr>
                                     <th>#</th>
@@ -93,8 +94,8 @@ const DonorHome = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    donorRequest.slice(0, 3).map((request, index) => <tr key={request._id}>
+                                {donorRequest.slice(0, 3).map((request, index) => (
+                                    <tr key={request._id}>
                                         <th>{index + 1}</th>
                                         <td>{request.recipientName}</td>
                                         <td>{request.upazila}, {request.district}</td>
@@ -102,33 +103,32 @@ const DonorHome = () => {
                                         <td>{request.donationTime}</td>
                                         <td>{getStatus(request)}</td>
                                         <td>
-                                        {getStatus(request) === 'inprogress' && (
-                                            <>
-                                                <button
-                                                    onClick={() => handleStatusChange(request._id, 'done')}
-                                                    className="btn btn-success btn-sm ml-2"
-                                                >Done</button>
-                                                <button
-                                                    onClick={() => handleStatusChange(request._id, 'canceled')}
-                                                    className="btn btn-danger btn-sm ml-2"
-                                                >Cancel</button>
-                                            </>
-                                        )}
-                                        {(getStatus(request) === 'pending' || getStatus(request) === 'inprogress') && (
-                                            <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
-                                                <Link to={`/dashboard/updatedRequest/${request._id}`}>
-                                                    <button className='bg-yellow-500 px-3 py-1 rounded mb-2 lg:mb-0'><FaEdit className='text-xl '></FaEdit></button>
-                                                </Link>
-                                                <Link to={`/dashboard/details/${request._id}`}>
-                                                    <button className='bg-gray-300 px-3 py-1 rounded mb-2 lg:mb-0'> <GrView className='text-xl' /></button>
-                                                </Link>
-                                                <button onClick={()                                                     => handleDelete(request._id)} className='bg-orange-400 px-2 py-1 rounded'><MdDelete className='text-xl mx-auto'></MdDelete></button>
+                                            {getStatus(request) === 'inprogress' && (
+                                                <>
+                                                    <button
+                                                        onClick={() => handleStatusChange(request._id, 'done')}
+                                                        className="btn btn-success btn-sm ml-2"
+                                                    >Done</button>
+                                                    <button
+                                                        onClick={() => handleStatusChange(request._id, 'canceled')}
+                                                        className="btn btn-danger btn-sm ml-2"
+                                                    >Cancel</button>
+                                                </>
+                                            )}
+                                            {(getStatus(request) === 'pending' || getStatus(request) === 'inprogress') && (
+                                                <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
+                                                    <Link to={`/dashboard/updatedRequest/${request._id}`}>
+                                                        <button className='bg-yellow-500 px-3 py-1 rounded mb-2 lg:mb-0'><FaEdit className='text-xl'></FaEdit></button>
+                                                    </Link>
+                                                    <Link to={`/dashboard/details/${request._id}`}>
+                                                        <button className='bg-gray-300 px-3 py-1 rounded mb-2 lg:mb-0'> <GrView className='text-xl' /></button>
+                                                    </Link>
+                                                    <button onClick={() => handleDelete(request._id)} className='bg-orange-400 px-2 py-1 rounded'><MdDelete className='text-xl mx-auto'></MdDelete></button>
                                                 </div>
                                             )}
                                         </td>
-                                    </tr>)
-                                }
-
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

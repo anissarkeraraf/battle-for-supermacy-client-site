@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../Hooks/useAuth';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
@@ -13,7 +14,7 @@ const CreateDonationRequest = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [donor] = useDonors();
-    // console.log(donor[0].role)
+    console.log(donor[0])
 
     const {
         register,

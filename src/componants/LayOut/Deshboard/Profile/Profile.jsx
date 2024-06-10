@@ -19,6 +19,7 @@ const Profile = () => {
         bloodGroup: ''
     });
     const axiosSecure = useAxiosSecure();
+    console.log(donor)
 
     useEffect(() => {
         if (donor && donor.length > 0) {
@@ -40,7 +41,7 @@ const Profile = () => {
     const handleSaveClick = async () => {
         try {
             const res = await axiosSecure.patch(`/doners/${user.email}`, formData);
-            // console.log(res.data);
+            console.log('Axios request configuration:', res.config);
             if (res.data.modifiedCount){
                 Swal.fire({
                     position: "center",
@@ -50,7 +51,7 @@ const Profile = () => {
                     timer: 1500
                 });
             }
-                setIsEditable(false);
+            setIsEditable(false);
         } catch (error) {
             console.error('Error updating donor:', error);
         }
