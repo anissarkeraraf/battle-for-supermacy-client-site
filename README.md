@@ -35,3 +35,13 @@ Welcome to Blood Buddies, Do you need blood of any group ? please contact Blood 
 
 
 - **Community Forums**: Engage with follow Homeenthusiasts in lively discussions with our doctors about your problem.
+
+
+## How to clone and run locally
+**1.** Go to GitHub's repository and copy the code link.
+
+**2.** Open the Command Prompt system in your windows and go to your project file.
+
+**3.** Paste the copied link by writing git clone and click enter.
+
+**4.** Once Git is cloned, run it locally with npm run dev.
